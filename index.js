@@ -16,7 +16,31 @@ mongoose
     return Recipe.deleteMany();
   })
   .then(() => {
-    // Run your code here, after you have insured that the connection was made
+    const recipe = {
+      title: "Ochazuke",
+      level: "Easy Peasy",
+      ingredients: [
+        "Short-grain rice",
+        "Green tea",
+        "Salmon",
+        "Ochazuke seasoning",
+      ],
+      cuisine: "Japanese",
+      image:
+        "https://www.justonecookbook.com/wp-content/uploads/2020/01/Ochazuke-8958-2-II.jpg",
+      duration: 10,
+      creator: "Nana",
+    };
+
+    Recipe.create(recipe).then(console.log(recipe.title));
+  })
+  .then(() => {
+    const recipes = data;
+    Recipe.insertMany(recipes);
+    console.log(recipes[2].title);
+  })
+  .then(() => {
+    Recipe.findOneAndUpdate();
   })
   .catch((error) => {
     console.error("Error connecting to the database", error);
