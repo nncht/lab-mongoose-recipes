@@ -56,4 +56,13 @@ mongoose
   })
   .catch((error) => {
     console.error("Something went wrong.");
+  })
+  .then(() => {
+    Recipe.deleteOne({ title: "Carrot Cake" });
+  })
+  .then((x) => {
+    console.log("Carrot Cake was deleted!");
+  })
+  .catch((error) => {
+    console.error("Something went wrong.");
   });
