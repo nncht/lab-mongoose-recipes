@@ -6,6 +6,7 @@ const Recipe = require("./models/Recipe.model");
 const data = require("./data");
 
 const MONGODB_URI = "mongodb://127.0.0.1:27017/recipe-app";
+mongoose.set("strictQuery", true);
 
 // Connection to the database "recipe-app"
 mongoose
@@ -14,6 +15,9 @@ mongoose
     console.log(`Connected to the database: "${x.connection.name}"`);
     // Before adding any recipes to the database, let's remove all existing ones
     return Recipe.deleteMany();
+  })
+  .catch((error) => {
+    console.error("Error connecting to the database", error);
   })
   .then(() => {
     const recipe = {
@@ -37,11 +41,19 @@ mongoose
   .then(() => {
     const recipes = data;
     Recipe.insertMany(recipes);
-    console.log(recipes[2].title);
+    recipes.forEach((recipe) => {
+      console.log(recipe.title);
+    });
   })
   .then(() => {
-    Recipe.findOneAndUpdate();
+    Recipe.findOneAndUpdate(
+      { title: "Rigatoni alla Genovese" },
+      { duration: 100 }
+    );
+  })
+  .then((x) => {
+    console.log("Rigatoni alla Genovese was updated!");
   })
   .catch((error) => {
-    console.error("Error connecting to the database", error);
+    console.error("Something went wrong.");
   });
